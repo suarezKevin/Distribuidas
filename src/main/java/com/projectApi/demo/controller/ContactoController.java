@@ -62,9 +62,12 @@ public class ContactoController {
         return new ResponseEntity<>(ResponseContactoDto.from(contacto), HttpStatus.OK);
     }
 
-    @PutMapping(value = "{idContacto}")
-    public ResponseEntity<ResponseContactoDto> updateContacto(@PathVariable final Integer idContacto, @RequestBody final ContactoDto contactoDto){
-        Contacto updateContacto = contactoService.updateContacto(idContacto, Contacto.from(contactoDto));
+    @PutMapping(value = "{idContacto}/actualizacion/{idSucursal}")
+    public ResponseEntity<ResponseContactoDto> updateContacto(@PathVariable final Integer idContacto, @PathVariable final Integer idSucursal,@RequestBody final ContactoDto contactoDto){
+        Contacto contacto = Contacto.from(contactoDto);
+        contacto.setSucursalpertenece(sucursalService.getSucursal(idSucursal));
+        Contacto updateContacto = contactoService.updateContacto(idContacto, contacto);
+
         return new ResponseEntity<>(ResponseContactoDto.from(updateContacto), HttpStatus.OK);
     }
 
