@@ -1,6 +1,7 @@
 package com.projectApi.demo.service;
 
 import com.projectApi.demo.model.Notificacion;
+import com.projectApi.demo.model.Sucursal;
 import com.projectApi.demo.model.exception.NotificacionNotFoundException;
 import com.projectApi.demo.repository.NotificacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class NotificacionService {
     public NotificacionService(NotificacionRepository notificacionRepository) {
         this.notificacionRepository = notificacionRepository;
     }
+
 
     public Notificacion addNotificacion(Notificacion notificacion){
         return notificacionRepository.save(notificacion);
@@ -46,4 +48,9 @@ public class NotificacionService {
 
         return notificacionToEdit;
     }
+
+    public List<Notificacion> obtenerPorSucursarl(Sucursal sucursal){
+        return notificacionRepository.findAllBySucursal(sucursal);
+    }
+
 }

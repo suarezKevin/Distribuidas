@@ -4,6 +4,7 @@ import com.projectApi.demo.model.Contacto;
 import com.projectApi.demo.model.Sucursal;
 import com.projectApi.demo.model.dto.ContactoDto;
 import com.projectApi.demo.model.dto.ResponseContactoDto;
+import com.projectApi.demo.model.dto.ResponseNotificacionDto;
 import com.projectApi.demo.model.dto.SucursalDto;
 import com.projectApi.demo.service.ContactoService;
 import com.projectApi.demo.service.SucursalService;
@@ -61,7 +62,7 @@ public class ContactoController {
         return new ResponseEntity<>(ResponseContactoDto.from(contacto), HttpStatus.OK);
     }
 
-    @PutMapping(value = "{idContacto}")
+    @PutMapping(value = "{idContacto}/")
     public ResponseEntity<ResponseContactoDto> updateContacto(@PathVariable final Integer idContacto, @RequestBody final ContactoDto contactoDto){
         Contacto updateContacto = contactoService.updateContacto(idContacto, Contacto.from(contactoDto));
         return new ResponseEntity<>(ResponseContactoDto.from(updateContacto), HttpStatus.OK);
@@ -72,5 +73,14 @@ public class ContactoController {
         Contacto contacto = contactoService.loginContacto(usuario, contrasenia);
         return new ResponseEntity<>(ResponseContactoDto.from(contacto), HttpStatus.OK);
     }
+
+    @GetMapping(value = "sucursal/{idSucursal}")
+    public ResponseEntity<List<ResponseContactoDto>> getAllNotificacionesBySucursal(@PathVariable final Integer idSucursal){
+        Sucursal sucursal = sucursalService.getSucursal(idSucursal);
+        List<ResponseContactoDto> notificacionDtoList = contactoService.getAllContactosBySucursal(sucursal).stream()
+                        .map(ResponseContactoDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(notificacionDtoList, HttpStatus.OK);
+    }
+
 
 }

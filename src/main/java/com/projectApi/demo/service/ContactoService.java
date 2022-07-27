@@ -1,9 +1,12 @@
 package com.projectApi.demo.service;
 
 import com.projectApi.demo.model.Contacto;
+import com.projectApi.demo.model.Sucursal;
 import com.projectApi.demo.model.exception.ContactoNotFoundException;
 import com.projectApi.demo.repository.ContactoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +61,11 @@ public class ContactoService {
     public Contacto loginContacto(String usuario, String contrasenia){
         Contacto contacto = contactoRepository.findByUsuariocontactoAndContraseniacontacto(usuario, contrasenia);
         return contacto;
+    }
+
+    //Obtener todos los contactos por sucursal (enviamos la entidad)
+    public List<Contacto> getAllContactosBySucursal(Sucursal sucursal){
+        return contactoRepository.findAllBySucursalpertenece(sucursal);
     }
 
 }

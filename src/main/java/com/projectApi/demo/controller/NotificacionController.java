@@ -65,4 +65,12 @@ public class NotificacionController {
         return new ResponseEntity<>(ResponseNotificacionDto.from(updateNotificacion), HttpStatus.OK);
     }
 
+    @GetMapping(value="sucursal/{idSucursal}")
+    public ResponseEntity<List<NotificacionDto>> getAllNotificacionBySucursal(@PathVariable final Integer idSucursal){
+        Sucursal sucursal = sucursalService.getSucursal(idSucursal);
+        List<NotificacionDto> dtoList = notificacionService.obtenerPorSucursarl(sucursal)
+                .stream().map(NotificacionDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
 }
