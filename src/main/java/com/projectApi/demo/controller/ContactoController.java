@@ -32,7 +32,7 @@ public class ContactoController {
     }
 
     @PostMapping(value ="{idSucursal}")
-    public ResponseEntity<ResponseContactoDto> addContacto(@PathVariable   final Integer idSucursal, @RequestBody final ContactoDto contactoDto){
+    public ResponseEntity<ResponseContactoDto> addContacto(@PathVariable final Integer idSucursal, @RequestBody final ContactoDto contactoDto){
         Contacto contacto = Contacto.from(contactoDto);
         contacto.setSucursalpertenece(sucursalService.getSucursal(idSucursal));
 
@@ -62,7 +62,7 @@ public class ContactoController {
         return new ResponseEntity<>(ResponseContactoDto.from(contacto), HttpStatus.OK);
     }
 
-    @PutMapping(value = "{idContacto}/")
+    @PutMapping(value = "{idContacto}")
     public ResponseEntity<ResponseContactoDto> updateContacto(@PathVariable final Integer idContacto, @RequestBody final ContactoDto contactoDto){
         Contacto updateContacto = contactoService.updateContacto(idContacto, Contacto.from(contactoDto));
         return new ResponseEntity<>(ResponseContactoDto.from(updateContacto), HttpStatus.OK);
